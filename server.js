@@ -167,28 +167,38 @@ http_app.get('/', function(req, res, next){
 });
 
 
-http_app.get('/*', function(req, res, next){
-	
+http_app.get('/*', (req, res, next) => {
+    //화상히의 방으로 접속하는 부분
+    // 여기서 인증 해야함.
+    
 	if (/^http$/.test(req.protocol)) {
 		var host = req.headers.host.replace(/:[0-9]+$/g, "");
 		var url = encodeURI(req.url, 'UTF-8');
 
 		return res.redirect("https://" + host + ":" + port + url, 301);
 	} 
-	
-	fs.readFile(__dirname + '/views/room.ejs', 'utf8', function(error, data) {
-		if(error) return errorHandlerFnt(error, req, res, next);
-
-		res.writeHead(200, {'content-type' : 'text/html'});   
-		res.end(ejs.render(data, {  
-			roomID : '',  
-			userName : '',  
-			psycare : '',
-			description : 'Hello .. !'  
-		}));  
-	});  
+    if(req.user){ //인증 미들웨어를 만들어야 함. 
+        //req.user.penalty < 3 일 때 
+        //유저의 정보를 room.ejs로 전달해야 함.
+        fs.readFile(__dirname + '/views/room.ejs', 'utf8', function(error, data) {
+            if(error) return errorHandlerFnt(error, req, res, next);
+    
+            res.writeHead(200, {'content-type' : 'text/html'});   
+            res.end(ejs.render(data, {  
+                roomID : '',  
+                userName : '',  
+                psycare : '',
+                description : 'Hello .. !'  
+            }));  
+        });  
+    }
+    //else if(패널티 초과){}
+    else{
+        //로그인이 필요하다는 메시지 띄우기
+        res.redirect('/');
+        next();
+    }
 });
-
 
 //error handler
 http_app.use(function(err, req, res, next){
