@@ -177,7 +177,7 @@ http_app.get('/*', (req, res, next) => {
 
 		return res.redirect("https://" + host + ":" + port + url, 301);
 	} 
-    if(req.user){ //인증 미들웨어를 만들어야 함. 
+    if(req.user && req.user.penalty < 3){ //인증 미들웨어를 만들어야 함. 
         //req.user.penalty < 3 일 때 
         //유저의 정보를 room.ejs로 전달해야 함.
         fs.readFile(__dirname + '/views/room.ejs', 'utf8', function(error, data) {
@@ -192,7 +192,11 @@ http_app.get('/*', (req, res, next) => {
             }));  
         });  
     }
-    //else if(패널티 초과){}
+    else if(req.user && req.user.penalty >= 3){ //패널티가 3을 초과하는 경우
+        console.log('패널티 3 초과');
+        res.redirect('/');
+        next();
+    }
     else{
         //로그인이 필요하다는 메시지 띄우기
         res.redirect('/');

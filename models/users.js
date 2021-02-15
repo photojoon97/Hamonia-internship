@@ -18,6 +18,11 @@ var userSchema = new Schema({
     nickname : {
         type: String,
         required: true
+    },
+    penalty : {
+        type : Number,
+        required : true,
+        default : 0
     }
 });
 

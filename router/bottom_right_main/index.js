@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
     }
     else {
         console.log(user);
-        res.render('./member/bottom_right_main.ejs', { isLogin: true , email : user.email , nickname : user.nickname /*auth_type : auth_type} */});
+        res.render('./member/bottom_right_main.ejs', { isLogin: true , email : user.email , nickname : user.nickname, penalty : user.penalty});
     }
 });
 

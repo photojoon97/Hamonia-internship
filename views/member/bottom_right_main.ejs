@@ -5,8 +5,9 @@
 	<div class="box3">
 		<%if (isLogin){ %>
 			<button id= "logoutBtn"class="btn">로그아웃</button>
-			<p><%= email %></p>
-			<p><%= nickname %></p>
+			<p>이메일 : <%= email %></p>
+			<p>닉네임 : <%= nickname %></p>
+			<p>패널티 : <%= penalty %></p>
 		<% } else { %>
 			<div class=box3-1 >
 			<button id="opneLoginDiv" class="btn">로그인</button>
