@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Hamonia Media Weaver</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="PDF Viewer" />
+	
+	<!-- <preference name="MediaPlaybackRequiresUserAction" value="true"/> -->
+	
+	<link rel="shortcut icon" href="/views/logo.png">
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	
+	<!-- Bootstrap core CSS-->
+	<link href="/css/vendor/bootstrap.min.css" rel="stylesheet">
+	<!-- Custom fonts for this template-->
+	<link href="/css/vendor/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<!-- Page level plugin CSS-->
+	<link href="/css/vendor/dataTables.bootstrap4.css" rel="stylesheet">
+	<!-- Custom styles for this template-->
+	<link href="/css/sb-admin.css" rel="stylesheet">
+	
+	<!-- Bower CSS styles -->
+	<link type="text/css" rel="stylesheet" href="/css/jquery-ui.min.css">
+	<link type="text/css" rel="stylesheet" href="/css/material-design-iconic-font.min.css">
+	<link type="text/css" rel="stylesheet" href="/css/lumx.css">
+	
+	<!-- Custom CSS styles -->
+	<link type="text/css" rel="stylesheet" href="/css/googleapis-fonts.css">
+	
+	<link type="text/css" rel="stylesheet" href="/css/index.css" />
+	<link type="text/css" rel="stylesheet" href="/css/reset.css" />
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="/css/fileshare_style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/fileshare_mian.css" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+	<script src="/js/jquery.cookie.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	
+	
+	<!-- 확인을 위해 script src="/dist/RTCMultiConnection.min.js"></script -->
+	<script src="/dist/RTCMultiConnection.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119868541-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		
+		gtag('config', 'UA-119868541-1');
+	</script>
+</head>
+
+<body id="page-top">
+	
+	<!-- main page start -->
+	<div id="createRoom">
+		<div style="padding: 30px;">
+		    <div class="contentBody row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8" style="text-align: center;">
+					<img alt="" src="/img/main_logo.png" width="100%" id="inviteUser">
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			
+			<hr style="width: 100%; margin: 30px 0 ; border: 0;"/>
+			
+			<div class="contentBody row" style="overflow: visible;">
+				
+				<div class="bottom_left miniSize" style="overflow: hidden;">
+					<h3>Hamonia Media<br>Weaver</h3>
+					<img alt="" src="/img/camera_bg.png">
+					<p>하모니아 미디어 위버로<br> 전 세계와 소통해 보세요.</p>
+				</div>
+				
+				<div style="width: 1%;"></div>
+				
+				<div class="bottom_right"></div>
+		    </div>
+		    
+			<hr style="width: 100%; margin: 30px 0 ; border: 0;"/>
+			
+			<div class="main_intro contentBody row">
+				<div class="intro_left col-md-4">
+					<img alt="" src="/img/intro_left_img.jpg">
+				</div>
+				
+				<div class="intro_right col-md-8">
+					<img src="/img/intro_head.png" alt="HAMONIA 화면너머의 사람들과 만나는 시간">
+					<p class="intro_text">하모니아(HamoniA)는  별도의 엑티브엑스의 설치없이 웹 브라우저로 언제 어디에서나 인터넷만 연결되어 있으면  기업회의, 상담, 세미나 등  음성 및 영상의 정보를 다자간 실시간으로  커뮤니케이션을  즐길 수  있는 서비스 입니다. </p>
+					<p class="intro_text">웹브라우저에서 hamonia.kr 접속하여 사용할 수 있습니다. 그룹웨어, 사내 포털 시스템 등에  Hamonia 배너를 삽입하여 영상커뮤니케이션을  할 수  있습니다.</p>
+					<p class="intro_btn"><a href="javascript:alert('연락처 : 02-2039-3977');">문의하기</a></p>
+				</div>
+			</div>
+			
+			<hr style="width: 100%; margin: 30px 0 ; border: 0;"/>
+		</div>
+		
+		
+		<!-- footer content -->
+		<footer>
+			<div class="footer_info row">
+				<div class="col-md-3">
+					<img src="/img/footer_logo_m.jpg" alt="HAMONIA" width="100%;" style="margin-bottom: 15px;">
+				</div>
+				
+				<div class="col-md-5">
+					<p>
+						<span><a href="http://invesume.com" target="_blank">주식회사 인베슘</a></span><br>
+						(06640) 서울시 서초구 사임당로8길 17, 201<br>
+						대표이사 : 김형채&nbsp;&nbsp;&nbsp;사업자등록번호 : 198-86-00029<br>
+						Tel : 02-2039-3977&nbsp;&nbsp;&nbsp;Fax : 02-2039-3978
+					</p>
+				</div>
+				
+				<div class="col-md-4">
+					<p style="margin: 5px;"><span>고객센터</span><br>
+					Tel : 02-2039-3977<br>
+					Fax : 02-2039-3978<br>
+					E-mail : service@invesume.com</p>
+				</div>
+			</div>
+			
+			<p>Copyright Hamonia. All rights reserved.</p>
+		</footer>
+		<!-- footer content -->
+	</div>
+	<!-- main page end -->
+	<script type="text/javascript" src="/js/browserCheck.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<script src="https://cdn.webrtc-experiment.com/common.js"></script>
+	
+	<script>console.log('%cHELLO HAMONIA :)', 'color: #2BC1A4; font-size: 2rem; font-weight: bold');</script>
+</body>
+</html>

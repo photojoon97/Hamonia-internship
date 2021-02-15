@@ -1,0 +1,79 @@
+{
+  "name": "HamoniaMediaWeaver",
+  "preferGlobal": false,
+  "version": "1.0.0",
+  "author": {
+    "name": "INVESUME",
+    "email": "servicedesk@invesume.com",
+    "url": "https://hamonia.kr"
+  },
+  "description": "HamoniaMediaWeaver",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivsteam/HamoniaMediaWeaver"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "latest"
+  },
+  "main": "./dist/RTCMultiConnection.js",
+  "keywords": [
+    "HamoniaMediaWeaver",
+    "peer-to-peer",
+    "peer2peer",
+    "peer",
+    "webrtc",
+    "rtcmulticonnection",
+    "webrtc-library",
+    "library",
+    "javascript",
+    "chrome",
+    "firefox",
+    "android",
+    "rtcweb",
+    "rtcmulticonnection.js",
+    "multirtc",
+    "webrtc-experiment",
+    "javascript-library",
+    "muaz",
+    "muaz-khan"
+  ],
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect": "^3.7.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jquery": "^3.3.1",
+    "log4js": "^2.10.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.11.15",
+    "node-ensure": "0.0.0",
+    "nodemailer": "^4.6.8",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.87.0",
+    "rtcpeerconnection-shim": "^1.2.13",
+    "sdp": "^2.7.4",
+    "socket.io": "^2.1.1"
+  },
+  "analyze": false,
+  "license": "Apache License 2.0",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/ivsteam/HamoniaMediaWeaver/issues",
+    "email": "servicedesk@invesume.com"
+  },
+  "homepage": "https://hamonia.kr",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
