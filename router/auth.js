@@ -58,10 +58,12 @@ router.get('/logout', (req,res) => {
 
 router.post('/penalty', (req,res) => {
     console.log('attempt to increase penalty');
-    User.updateOne({email : "test@test01.com"}, {$inc : {penalty:1}})
+    console.log('이메일 전달 : ', req.body.email);
+    var receiveEmail = req.body.email;
+    User.updateOne({email : receiveEmail}, {$inc : {penalty:1}})
         .then(result => {
             console.log(result);
-        })
+        });
 });
 
 module.exports = router;

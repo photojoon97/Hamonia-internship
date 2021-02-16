@@ -232,10 +232,10 @@ document.getElementById('btn-leave-room').onclick = function () {
 	//if(타이머?){req.user.penalty 어떻게 접근? }
 
 	if(leaveFlag == true){
-		var email = $('#roomEmail').text();
-		alert(email);
+		var userEmail = $('#roomEmail').text();
+		alert(userEmail);
 
-		$.post('/penalty', {email : email});
+		$.post('/penalty', {email : userEmail});
 	}
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
 		// use this method if you did NOT set "autoCloseEntireSession===true"
