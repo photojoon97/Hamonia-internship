@@ -4,6 +4,11 @@ html, body {
     height: 100%;
 }
 */
+#slider { width:400px; margin:0 auto; }/*타이머*/
+
+#sliderImg { margin-top:10px; }
+
+#sliderText { text-align:center; color:blue; }
 
 #btn-login-back {/*뒤로가기 뒤로 가기*/
 	background-color: rgba(167, 91, 255, 0.288);
