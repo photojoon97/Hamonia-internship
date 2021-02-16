@@ -51,6 +51,7 @@ router.get('/logout', (req,res) => {
         req.session.destroy();
         console.log('successful logout');
         //리다이렉트
+        console.log(req.session);
         res.redirect('/');
     }
 });

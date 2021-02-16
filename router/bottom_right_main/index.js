@@ -8,16 +8,15 @@ router.get('/', function(req, res) {
     //var nickname = id.nickname;
     //var auth_type;
     
-    var user = req.user;
-    
     //if(id && id.user_email) user_email = id.email;
     //if(id && id.nickname) nickname = id.nickname;
     //if(id && id.auth_type) auth_type = id.auth_type;
 
-    if (!user) {
+    if (!req.user) {
         res.render('./member/bottom_right_main.ejs', { isLogin: false , nickname : ''  /*auth_type : ''*/});
     }
     else {
+        var user = req.user;
         console.log(user);
         res.render('./member/bottom_right_main.ejs', { isLogin: true , email : user.email , nickname : user.nickname, penalty : user.penalty});
     }

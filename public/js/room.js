@@ -197,7 +197,11 @@ function roomOpenNJoinFnt(){
 // 종료 버튼
 document.getElementById('btn-leave-room').onclick = function() {
     this.disabled = true;
-    
+	//현재 유저를 가져와서
+	//타이머가 남았는지 판단하고
+	//남았으면 패널티 부여하고 퇴장
+	//if(타이머?){req.user.penalty 어떻게 접근? }
+
     if ( isOnlyOneOwnerFnt && connection.isInitiator) {
         // use this method if you did NOT set "autoCloseEntireSession===true"
         // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
