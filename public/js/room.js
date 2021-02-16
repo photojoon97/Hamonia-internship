@@ -18,6 +18,7 @@ var fileSelectValue = '::::f!le$electCheckV@lue::::';
 var messageSplit = "::::H@moni@::split::::";
 var changeNameValue = '::::ch@nge::user::N@me::::';
 var newMsgCnt = 0;		// 새 메세지 수
+var isRoomTimer = false; //타이머
 
 
 $(document).ready(function(){

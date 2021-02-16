@@ -177,6 +177,7 @@ http_app.get('/*', (req, res, next) => {
 
 		return res.redirect("https://" + host + ":" + port + url, 301);
 	} 
+<<<<<<< Updated upstream
     if(req.isAuthenticated){ //인증 미들웨어를 만들어야 함. 
         //isAuthenticated 함수로 인증
         var penalty = req.user.penalty || 0; 
@@ -207,6 +208,20 @@ http_app.get('/*', (req, res, next) => {
         res.redirect('/');
         next();
     }
+=======
+	
+	fs.readFile(__dirname + '/views/room.ejs', 'utf8', function(error, data) {
+		if(error) return errorHandlerFnt(error, req, res, next);
+
+		res.writeHead(200, {'content-type' : 'text/html'});   
+		res.end(ejs.render(data, {  
+			roomID : '',  
+			userName : '',  
+			psycare : '',
+			description : 'Hello .. !'  //타이머 전달, room.ejs에
+		}));  
+	});  
+>>>>>>> Stashed changes
 });
 
 //error handler

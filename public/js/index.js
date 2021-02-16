@@ -130,6 +130,11 @@ function getReady(){
 
 	});
 	
+	//로그아웃 버튼
+	$('#logoutBtn').click(function(){
+		logout();
+	});
+
 	// 비회원 버튼
 	$('.bottom_right').on('click', '#notLoginDiv', function(){
 		location.reload();
@@ -161,7 +166,6 @@ function getReady(){
 	$('#open-or-join-room').click(function(){
 		openOrJoinRoomFnt();
 	});
-	
 
 }
 

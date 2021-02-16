@@ -11,6 +11,10 @@ html, body {
 	margin-top : 40px;
 }
 
+#btn-start-study {
+	margin-top : 0;
+}
+
 #buttonActions>button{
     font-size: 1.9rem;
 }
