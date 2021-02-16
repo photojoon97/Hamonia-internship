@@ -20,38 +20,10 @@ var changeNameValue = '::::ch@nge::user::N@me::::';
 var newMsgCnt = 0; // 새 메세지 수
 var isRoomTimer = false; //타이머
 
+//타이머 설정
+
+var myTime = window.setTime;
 var leaveFlag = true;
-
-
-$('#slider').slider({ //타이머 슬라이더
-
-	// 최소값 (지정하지 않으면 0)
-
-	min: 0,
-
-	// 최대값 (지정하지 않으면 100)
-
-	max: 120,
-
-	// 슬라이더 현재값 (지정하지 않으면 0)
-
-	value: 60,
-
-	// 증가하는 단계값 (지정하지 않으면 1)
-
-	step: 10,
-
-	// 슬라이더를 움직일때 실행할 코드
-
-	slide: function (event, ui) {
-
-		// ui.value 는 현재 슬라이더의 값
-
-		$('#sliderText').html(ui.value + '분')
-
-	}
-
-});
 
 $(document).ready(function () {
 	// os 및 browser 체크
@@ -233,8 +205,9 @@ document.getElementById('btn-leave-room').onclick = function () {
 
 	if(leaveFlag == true){
 		var userEmail = $('#roomEmail').text();
-		alert(userEmail);
 
+		//alert(window.setTime); //window 객체에서 다른 js 파일의 전역변수 참조 가능
+		//alert(window.setTime);
 		$.post('/penalty', {email : userEmail});
 	}
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
@@ -984,3 +957,32 @@ if (roomid && roomid.length && $('#userName').val() !== undefined && $('#userNam
 
 
 //타이머 함수 어디?
+function studyTimer(){
+	var setTime = window.setTime;
+	var time = setTime * 60;
+
+	setInterval(() => {
+		var hour = Math.floor(time/3600); //시간
+		var min = Math.floor(time/60);
+		var sec = time % 60;
+
+		//if(min<10){
+		//	min = '0'+min;
+		//} 
+
+		//document.querySelector('시간').innerHTML = '시';
+		//document.querySelector('분').innerHTML = '분';
+		//document.querySelector('초').innerHTML = '초';
+
+		if(hour == 0 && min == 0 && sec == 0){
+			//타이머 종료
+			//종료 구현
+			connection.leave();
+			localStream.stop();
+			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
+		}
+
+	},1000); // 1초 단위로 반복
+}
+
+ㄴ

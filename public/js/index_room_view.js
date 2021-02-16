@@ -14,6 +14,8 @@ var boardWidth = 800;
 var isFileshare = false;
 var isChangeName = false;
 
+var setTime; //전역변수
+
 $(document).ready(function(){
 	// set UI
 	checkedWindowType();
@@ -128,6 +130,9 @@ $(document).ready(function(){
 			// 카메라 변경
 			cameraChangeFnt(selectDevice);
 		}
+
+		//타이머 설정값
+		setTime = $('#selectTime option:selected').val(); //이 값을 room.js로 전달 해야 함
 		
 		optionFnt();
 	});

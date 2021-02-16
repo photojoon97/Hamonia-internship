@@ -56,7 +56,7 @@ router.get('/logout', (req,res) => {
     }
 });
 
-router.post('/penalty', (req,res) => {
+router.post('/penalty', (req) => {
     console.log('attempt to increase penalty');
     console.log('이메일 전달 : ', req.body.email);
     var receiveEmail = req.body.email;
