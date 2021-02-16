@@ -56,6 +56,14 @@ router.get('/logout', (req,res) => {
     }
 });
 
+router.post('/penalty', (req,res) => {
+    console.log('attempt to increase penalty');
+    User.updateOne({email : "test@test01.com"}, {$inc : {penalty:1}})
+        .then(result => {
+            console.log(result);
+        })
+});
+
 module.exports = router;
 
 //express-session은 req 객체안에 req.session 객체를 만든다.

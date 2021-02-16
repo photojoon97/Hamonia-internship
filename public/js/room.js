@@ -20,6 +20,9 @@ var changeNameValue = '::::ch@nge::user::N@me::::';
 var newMsgCnt = 0; // 새 메세지 수
 var isRoomTimer = false; //타이머
 
+var leaveFlag = true;
+
+
 $('#slider').slider({ //타이머 슬라이더
 
 	// 최소값 (지정하지 않으면 0)
@@ -228,6 +231,12 @@ document.getElementById('btn-leave-room').onclick = function () {
 	//남았으면 패널티 부여하고 퇴장
 	//if(타이머?){req.user.penalty 어떻게 접근? }
 
+	if(leaveFlag == true){
+		var email = $('#roomEmail').text();
+		alert(email);
+
+		$.post('/penalty', {email : email});
+	}
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
 		// use this method if you did NOT set "autoCloseEntireSession===true"
 		// for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
@@ -972,3 +981,6 @@ if (roomid && roomid.length && $('#userName').val() !== undefined && $('#userNam
 
 	disableInputButtons();
 }
+
+
+//타이머 함수 어디?
