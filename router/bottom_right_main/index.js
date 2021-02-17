@@ -2,6 +2,9 @@ var express = require('express'); // express 모듈 사용하기 위함
 var router = express.Router();
 var path = require('path');
 
+//서버 타이머
+
+
 router.get('/', function(req, res) {
     //var id = req.session.passport.user;
     //var user_email = id.email;

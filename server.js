@@ -16,6 +16,8 @@ const DB = require('./mongodb');
 const MongoStore = require('connect-mongo')(session);
 
 var bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 var passport = require('passport');
 var passportConfig = require('./public/js/passport'); //
 
@@ -102,6 +104,8 @@ http_app.use(bodyParser.urlencoded({
     limit: '50mb',
     extended: true
 }));
+
+http_app.use(cookieParser());
 
 // JSON과 x-www-form-urlencoded로 온 데이터를 Express가 파싱할 수 있도록 다음 미들웨어를 추가해준다.
 // `bodyParser`와 비슷한데, 대부분의 앱에서 여기에 bodyParser를 추가하는 것을 보았을 것이다.
@@ -207,6 +211,7 @@ http_app.get('/*', (req, res, next) => {
     if (req.isAuthenticated) { //인증 미들웨어를 만들어야 함. 
         //isAuthenticated 함수로 인증
         var penalty = req.user.penalty || 0;
+        res.cookie('nickName', req.user.nickname); //쿠키 설정 닉네임, 한글은 안됨
         if (penalty < 3) {
             //req.user.penalty < 3 일 때 
             //유저의 정보를 room.ejs로 전달해야 함.

@@ -469,10 +469,10 @@ function refreshVideoView(newStreamCheck){
 	}
 	
 	// 내 닉네임 텍스트 추가
-	if( !isChangeName ) {
-		var myNameTxt = $('#myVideo').parent('.media-box').children('h2');
-		myNameTxt.text(myNameTxt.text() + '(변경하기)');
-	}
+	//if( !isChangeName ) {
+	//	var myNameTxt = $('#myVideo').parent('.media-box').children('h2');
+	//	myNameTxt.text(myNameTxt.text() + '(변경하기)');
+	//}
 	
 	// 내 닉네임 css
 	$('#myVideo').parent('.media-box').children('h2').css('cursor', 'pointer');
@@ -953,7 +953,6 @@ function studyTimer(){
 	var hour, min, sec
 
 	var timer = setInterval(() => {
-
 		min = time / 60;
 		hour = min / 60;
 		sec = time % 60;

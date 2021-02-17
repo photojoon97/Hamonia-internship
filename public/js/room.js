@@ -170,7 +170,7 @@ function roomOpenNJoinFnt() {
 	}
 
 	// 대화명 설정
-	if ($.cookie('userName') != null) $('#userName').val($.cookie('userName')); //쿠키에 저장된 userName이 null이 아니면 userName으로 설정
+	if ($.cookie('nickName') != null) $('#userName').val($.cookie('nickName')); //쿠키에 저장된 userName이 null이 아니면 userName으로 설정
 	else $('#userName').val('Guest'); //userName이 저장돼있지 않다면 Guset로 설정
 
 
@@ -567,9 +567,9 @@ connection.onstream = function (event) {
 		// 내 영상
 		video.muted = true;
 		video.id = "myVideo";
-
+		
 		// 닉네임 설정
-		if ($.cookie('userName') != null) video.setAttribute('data-name', $.cookie('userName'));
+		if ($.cookie('nickName') != null) video.setAttribute('data-name', $.cookie('nickName'));
 		else video.setAttribute('data-name', 'Guest');
 
 		localStream = event.stream;
@@ -581,7 +581,7 @@ connection.onstream = function (event) {
 		}
 
 		roomName = $('#room-id').val();
-		userName = $('#userName').val();
+		userName = $('#userName').val(); //유저이름
 
 		//		if(userName.indexOf(messageSplit) != -1){
 		//			userName = 'Guest' + userName.split(messageSplit)[1];
@@ -929,7 +929,7 @@ if (roomid && roomid.length && $('#userName').val() !== undefined && $('#userNam
 
 				roomName = $('#room-id').val();
 				userName = $('#userName').val();
-
+				//여기선 권한을 !방장
 				$('#joinRoom').css('display', 'block');
 				$('#createRoom').remove();
 
