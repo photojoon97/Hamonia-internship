@@ -950,21 +950,24 @@ function studyTimer(){
 	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
 	var time = setTime * 60;
 
+	var hour, min, sec
+
 	var timer = setInterval(() => {
-		var hour = Math.floor(time/3600); //시간
-		var min = Math.floor(time/60);
-		var sec = time % 60;
+
+		min = time / 60;
+		hour = min / 60;
+		sec = time % 60;
+		min = min % 60;
 
 		time--;
 
 		//if(min<10){
 		//	min = '0'+min;
 		//} 
-		document.querySelector('#clock').innerHTML = hour + ' : ' + min + ' : ' + sec;
+
+		document.querySelector('#clock').innerHTML = Math.floor(hour) + ' : ' + Math.floor(min) + ' : ' + Math.floor(sec);
 
 		if(hour == 0 && min == 0 && sec == 0){
-			//타이머 종료
-			//종료 구현
 			leaveFlag = false;
 			connection.leave();
 			localStream.stop();

@@ -200,7 +200,7 @@ document.getElementById('btn-leave-room').onclick = function () {
 
 	if(window.leaveFlag == true){//타이머가 동작 중이면
 		var userEmail = $('#roomEmail').text(); //해당 사용자의 이메일을 가져와서
-		$.post('/penalty', {email : userEmail}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
+		if(confirm("지금 종료하시면 패널티가 부가됩니다.")) $.post('/penalty', {email : userEmail}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
 	}
 
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
