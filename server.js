@@ -248,9 +248,9 @@ http_app.get('/*', (req, res, next) => {
 
 //방장 권한 부여
 http_app.post('/role', (req,res) => {
-    var receiveEmail = req.body.email
+    var receiveEmail = req.body.email;
     //console.log(req.cookies.nickName);
-    
+
     User.updateOne({email : receiveEmail}, {$set : {master:true}})
     .then(result => {
         console.log(result);
@@ -261,12 +261,21 @@ http_app.post('/role', (req,res) => {
 });
 //방장 권한 삭제
 http_app.post('/roleDelete', (req,res) => {
-    var receiveEmail = req.body.email
+    var receiveEmail = req.body.email;
     User.updateOne({email : receiveEmail}, {$set : {master:false}})
     .then(result => {
         console.log(result);
     });
 })
+
+http_app.post('/startTimer', (req,res) => {
+    var receiveEmail = req.body.email;
+    var time = req.body.time;
+    User.findOne({email : receiveEmail})
+    .then(user => {
+        if(user.master == true) socket.emit('start-time', time);
+    })
+});
 
 
 //error handler

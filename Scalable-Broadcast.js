@@ -1,5 +1,6 @@
 var logger = require('./log4js-utils').logger();
 var users = {};
+var allUsersTimer = 0;
 
 module.exports = exports = function(socket, maxRelayLimitPerUser) {
     try {
@@ -68,9 +69,21 @@ module.exports = exports = function(socket, maxRelayLimitPerUser) {
         }
     });
 
+    socket.on('start-timer', (time) => {
+        socket.broadcast.emit('set-timer-to-all', time);
+    });
+
+    socket.on('start-timer-to-all', (time) =>{
+        //타이머 시작
+        allUsersTimer = time;
+    })
+
+
     socket.on('scalable-broadcast-message', function(message) {
         socket.broadcast.emit('scalable-broadcast-message', message);
     });
+
+
 
     socket.on('can-relay-broadcast', function() {
         if(users[socket.userid]) {

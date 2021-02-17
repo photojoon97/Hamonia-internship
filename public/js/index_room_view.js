@@ -126,6 +126,8 @@ $(document).ready(function(){
 		var checkbox = $('#myVideoRotate').is(':checked');
 		var saveval = $('#myVideoRotate').data('value');
 		
+		var userEmail = $('#roomEmail').text();
+
 		if(checkbox != saveval) $('#myVideoRotate').data('value', checkbox);
 		if(useDevice != selectDevice) {
 			// 카메라 변경
@@ -134,7 +136,10 @@ $(document).ready(function(){
 
 		//타이머 설정값
 		setTime = $('#selectTime option:selected').val(); //이 값을 room.js로 전달 해야 함
-		if(setTime != 0) studyTimer();
+		//방장인지 확인
+		$.post('/startTimer', {email : userEmail, time : setTime});
+
+		//if(setTime != 0) studyTimer();
 
 		
 		optionFnt();

@@ -224,6 +224,10 @@ document.getElementById('btn-leave-room').onclick = function () {
 	if (!isUseReview) location.href = "https://" + location.host;
 };
 
+//시작 버튼
+document.getElementById('startBtn').onclick = function () {
+	if(window.allUserTimer != 0) studyTimer();
+}
 
 // 사용자 리뷰
 function userReview() {
@@ -950,4 +954,35 @@ if (roomid && roomid.length && $('#userName').val() !== undefined && $('#userNam
 	})();
 
 	disableInputButtons();
+}
+
+
+function studyTimer(){
+	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
+	var time = setTime * 60;
+
+	var hour, min, sec
+
+	var timer = setInterval(() => {
+		min = time / 60;
+		hour = min / 60;
+		sec = time % 60;
+		min = min % 60;
+
+		time--;
+
+		//if(min<10){
+		//	min = '0'+min;
+		//} 
+
+		document.querySelector('#clock').innerHTML = Math.floor(hour) + ' : ' + Math.floor(min) + ' : ' + Math.floor(sec);
+
+		if(hour == 0 && min == 0 && sec == 0){
+			leaveFlag = false;
+			connection.leave();
+			localStream.stop();
+			clearInterval(timer); // 타이머 종료
+			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
+		}
+	},1000); // 1초 단위로 반복
 }
