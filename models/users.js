@@ -23,6 +23,10 @@ var userSchema = new Schema({
         type : Number,
         required : true,
         default : 0
+    },
+    master : {
+        type : Boolean,
+        default : false
     }
 });
 

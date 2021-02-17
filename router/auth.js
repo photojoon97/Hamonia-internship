@@ -66,6 +66,7 @@ router.post('/penalty', (req) => {
         });
 });
 
+
 module.exports = router;
 
 //express-session은 req 객체안에 req.session 객체를 만든다.

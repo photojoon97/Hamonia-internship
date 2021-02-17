@@ -192,16 +192,20 @@ function roomOpenNJoinFnt() {
 
 // 종료 버튼
 document.getElementById('btn-leave-room').onclick = function () {
-	this.disabled = true;
+	this.disabled = true;//해당 사용자의 이메일을 가져와서
+	var userEmail = $('#roomEmail').text(); //해당 사용자의 이메일을 가져와서
 	//현재 유저를 가져와서
 	//타이머가 남았는지 판단하고
 	//남았으면 패널티 부여하고 퇴장
 	//if(타이머?){req.user.penalty 어떻게 접근? }
 
 	if(window.leaveFlag == true){//타이머가 동작 중이면
-		var userEmail = $('#roomEmail').text(); //해당 사용자의 이메일을 가져와서
 		if(confirm("지금 종료하시면 패널티가 부가됩니다.")) $.post('/penalty', {email : userEmail}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
 	}
+
+	//role 체크
+	//if($.cookie('role') == true) $.post('/roleDelete', {role : $.cookie('role')});
+	$.post('/roleDelete', {email : userEmail});
 
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
 		// use this method if you did NOT set "autoCloseEntireSession===true"

@@ -484,6 +484,13 @@ function refreshVideoView(newStreamCheck){
 function countUsers(){
 	// 인원수 체크
 	$('#userCnt').text(connection.peers.getLength()+1);
+	var userNum = $('#userCnt').text();
+	
+	//사용자가 한 명이면 그 사용자가 방장
+	if(userNum == 1){
+		var userEmail = $('#roomEmail').text(); 
+		$.post('/role', {email : userEmail});
+	}
 }
 /**** UI end ****/
 

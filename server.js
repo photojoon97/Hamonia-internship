@@ -14,6 +14,7 @@ var fs = require('fs');
 const mongoose = require('mongoose');
 const DB = require('./mongodb');
 const MongoStore = require('connect-mongo')(session);
+const User = require('./models/users');
 
 var bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -174,6 +175,7 @@ http_app.post('/translate', function (req, res) {
 
 http_app.get('/', function (req, res, next) {
 
+
     if (/^http$/.test(req.protocol)) {
         var host = req.headers.host.replace(/:[0-9]+$/g, "");
 
@@ -212,6 +214,7 @@ http_app.get('/*', (req, res, next) => {
         //isAuthenticated 함수로 인증
         var penalty = req.user.penalty || 0;
         res.cookie('nickName', req.user.nickname); //쿠키 설정 닉네임, 한글은 안됨
+        
         if (penalty < 3) {
             //req.user.penalty < 3 일 때 
             //유저의 정보를 room.ejs로 전달해야 함.
@@ -242,6 +245,29 @@ http_app.get('/*', (req, res, next) => {
         next();
     }
 });
+
+//방장 권한 부여
+http_app.post('/role', (req,res) => {
+    var receiveEmail = req.body.email
+    //console.log(req.cookies.nickName);
+    
+    User.updateOne({email : receiveEmail}, {$set : {master:true}})
+    .then(result => {
+        console.log(result);
+    });
+    //쿠키 삭제
+    res.clearCookie('role');
+        
+});
+//방장 권한 삭제
+http_app.post('/roleDelete', (req,res) => {
+    var receiveEmail = req.body.email
+    User.updateOne({email : receiveEmail}, {$set : {master:false}})
+    .then(result => {
+        console.log(result);
+    });
+})
+
 
 //error handler
 http_app.use(function (err, req, res, next) {

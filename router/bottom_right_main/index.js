@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
     }
     else {
         var user = req.user;
-        console.log(user);
+        //console.log(user);
         res.render('./member/bottom_right_main.ejs', { isLogin: true , email : user.email , nickname : user.nickname, penalty : user.penalty});
     }
 });
