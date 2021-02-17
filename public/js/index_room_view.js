@@ -14,7 +14,8 @@ var boardWidth = 800;
 var isFileshare = false;
 var isChangeName = false;
 
-var setTime; //전역변수
+var setTime; //사용자 설정 타이머 시간
+var leaveFlag = false; //타이머 동작 여부
 
 $(document).ready(function(){
 	// set UI
@@ -133,6 +134,8 @@ $(document).ready(function(){
 
 		//타이머 설정값
 		setTime = $('#selectTime option:selected').val(); //이 값을 room.js로 전달 해야 함
+		if(setTime != 0) studyTimer();
+
 		
 		optionFnt();
 	});
@@ -941,3 +944,32 @@ function createreceMsgDiv(userName, message){
 	$('.chat-output').scrollTop($('.chat-output')[0].scrollHeight);
 }
 /**** 채팅 end ****/
+
+//타이머
+function studyTimer(){
+	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
+	var time = setTime * 60;
+
+	var timer = setInterval(() => {
+		var hour = Math.floor(time/3600); //시간
+		var min = Math.floor(time/60);
+		var sec = time % 60;
+
+		time--;
+
+		//if(min<10){
+		//	min = '0'+min;
+		//} 
+		document.querySelector('#clock').innerHTML = hour + ' : ' + min + ' : ' + sec;
+
+		if(hour == 0 && min == 0 && sec == 0){
+			//타이머 종료
+			//종료 구현
+			leaveFlag = false;
+			connection.leave();
+			localStream.stop();
+			clearInterval(timer); // 타이머 종료
+			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
+		}
+	},1000); // 1초 단위로 반복
+}
