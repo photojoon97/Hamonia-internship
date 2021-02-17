@@ -230,8 +230,13 @@ document.getElementById('btn-leave-room').onclick = function () {
 
 //타이머 시작 버튼
 document.getElementById('startBtn').onclick = function () {
-	alert(window.allUserTimer);
-	if(window.allUserTimer != 0) studyTimer();
+	if(leaveFlag != true){
+		//alert(window.allUserTimer);
+		if(window.allUserTimer != 0) studyTimer();
+	}
+	else{
+		alert('타이머가 이미 실행 중');
+	}
 }
 
 // 사용자 리뷰
