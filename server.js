@@ -273,7 +273,10 @@ http_app.post('/startTimer', (req,res) => {
     var time = req.body.time;
     User.findOne({email : receiveEmail})
     .then(user => {
-        if(user.master == true) socket.emit('start-time', time);
+        console.log('방장권한으로 타이머 세팅');
+        if(user.master == true) require('./Signaling-Server.js')((socket) => {
+            socket.emit('start-timer',time);
+        })
     })
 });
 

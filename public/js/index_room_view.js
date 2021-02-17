@@ -14,9 +14,6 @@ var boardWidth = 800;
 var isFileshare = false;
 var isChangeName = false;
 
-var setTime; //사용자 설정 타이머 시간
-var leaveFlag = false; //타이머 동작 여부
-
 $(document).ready(function(){
 	// set UI
 	checkedWindowType();
@@ -140,8 +137,6 @@ $(document).ready(function(){
 		$.post('/startTimer', {email : userEmail, time : setTime});
 
 		//if(setTime != 0) studyTimer();
-
-		
 		optionFnt();
 	});
 	
@@ -957,33 +952,33 @@ function createreceMsgDiv(userName, message){
 }
 /**** 채팅 end ****/
 
-//타이머
-function studyTimer(){
-	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
-	var time = setTime * 60;
-
-	var hour, min, sec
-
-	var timer = setInterval(() => {
-		min = time / 60;
-		hour = min / 60;
-		sec = time % 60;
-		min = min % 60;
-
-		time--;
-
-		//if(min<10){
-		//	min = '0'+min;
-		//} 
-
-		document.querySelector('#clock').innerHTML = Math.floor(hour) + ' : ' + Math.floor(min) + ' : ' + Math.floor(sec);
-
-		if(hour == 0 && min == 0 && sec == 0){
-			leaveFlag = false;
-			connection.leave();
-			localStream.stop();
-			clearInterval(timer); // 타이머 종료
-			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
-		}
-	},1000); // 1초 단위로 반복
-}
+////타이머
+//function studyTimer(){
+//	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
+//	var time = setTime * 60;
+//
+//	var hour, min, sec
+//
+//	var timer = setInterval(() => {
+//		min = time / 60;
+//		hour = min / 60;
+//		sec = time % 60;
+//		min = min % 60;
+//
+//		time--;
+//
+//		//if(min<10){
+//		//	min = '0'+min;
+//		//} 
+//
+//		document.querySelector('#clock').innerHTML = Math.floor(hour) + ' : ' + Math.floor(min) + ' : ' + Math.floor(sec);
+//
+//		if(hour == 0 && min == 0 && sec == 0){
+//			leaveFlag = false;
+//			connection.leave();
+//			localStream.stop();
+//			clearInterval(timer); // 타이머 종료
+//			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
+//		}
+//	},1000); // 1초 단위로 반복
+//}

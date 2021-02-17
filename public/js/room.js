@@ -20,6 +20,10 @@ var changeNameValue = '::::ch@nge::user::N@me::::';
 var newMsgCnt = 0; // 새 메세지 수
 //var isRoomTimer = false; //타이머
 
+var setTime; //사용자 설정 타이머 시간
+var leaveFlag = false; //타이머 동작 여부
+
+
 $(document).ready(function () {
 	// os 및 browser 체크
 	if (!browserCheck(false)) location.href = "https://" + location.host;
@@ -199,7 +203,7 @@ document.getElementById('btn-leave-room').onclick = function () {
 	//남았으면 패널티 부여하고 퇴장
 	//if(타이머?){req.user.penalty 어떻게 접근? }
 
-	if(window.leaveFlag == true){//타이머가 동작 중이면
+	if(leaveFlag == true){//타이머가 동작 중이면
 		if(confirm("지금 종료하시면 패널티가 부가됩니다.")) $.post('/penalty', {email : userEmail}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
 	}
 
@@ -224,8 +228,9 @@ document.getElementById('btn-leave-room').onclick = function () {
 	if (!isUseReview) location.href = "https://" + location.host;
 };
 
-//시작 버튼
+//타이머 시작 버튼
 document.getElementById('startBtn').onclick = function () {
+	alert(window.allUserTimer);
 	if(window.allUserTimer != 0) studyTimer();
 }
 
