@@ -1,0 +1,75 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
+import time
+
+#초기화
+path = '/home/hamonikr/Hamonia-internship/selenium-test/chromedriver'
+url = "https://49.247.18.212:3000"
+
+options = webdriver.ChromeOptions()
+options.add_argument('--ignore-certificate-errors') #SSL 오류 무시
+
+options.add_experimental_option("prefs", { \
+    "profile.default_content_setting_values.media_stream_mic": 1,     # 1:allow, 2:block 
+    "profile.default_content_setting_values.media_stream_camera": 1,  # 1:allow, 2:block
+})
+
+driver = webdriver.Chrome(path,options=options)
+driver.get(url)
+
+def login():
+    enterLogin = driver.find_element_by_xpath('//*[@id="opneLoginDiv"]')
+    enterLogin.click()
+    emailField = driver.find_element_by_xpath('//*[@id="login-screen"]/input[1]')
+    passwordField = driver.find_element_by_xpath('//*[@id="login-screen"]/input[2]')
+    emailField.send_keys('cholavie@naver.com') #server DB에 저장된 이메일로 변경
+    passwordField.send_keys('1234')
+    loginBtn = driver.find_element_by_xpath('//*[@id="login-screen"]/button[1]').click()
+
+def enterRoom():
+    room = driver.find_element_by_id("room-id") #방이름을 입력하세ImportError: cannot import name 'NoAlertPresentExceptions' from 'selenium.common.exceptions' (/home/hamonikr/.local/lib/python3.8/site-packages/selenium/common/exceptions.py)요
+    joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
+    room.send_keys("testRoom")
+    joinBtn.click()
+
+def alert_is_display():
+        try:
+            driver.switch_to_alert().accept
+        except NoAlertPresentException as e:
+            return False
+        else:
+            return True   
+
+#함수 정의
+
+def changeNickname():
+    #닉네임 바꾸려고 현재 닉네임을 클릭
+    #try:
+        element = driver.find_element_by_xpath('//*[@id="uyYamQwgopE9E5mDtK7EsPlZhBwRgp68t86A"]/div[3]/h2')
+        driver.execute_script("arguments[0].click()", element)
+   # try:driver.execute_script("document.getElementById(arguments[0]).click();", cssSelec)
+    # try:
+    #     WebDriverWait(driver,20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="uyYamQwgopE9E5mDtK7EsPlZhBwRgp68t86A"]/div[3]/h2'))).click()
+    # #driver.executExceptionException as ex:
+    # except TimeoutException as ex:
+    #     print("TimeoutException has been thrown. " + str(ex))
+    #     driver.close()
+
+    
+
+login()
+enterRoom()
+
+time.sleep(2)
+if alert_is_display():
+    print('exceed user alert')
+time.sleep(3)
+
+changeNickname()
+
+
