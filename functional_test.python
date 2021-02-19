@@ -1,0 +1,40 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+#초기화
+path = '/home/hamonikr4/Hamonia-internship/selenium-test/chromedriver'
+url = "https://localhost:3000"
+
+options = webdriver.ChromeOptions()
+options.add_argument('--ignore-certificate-errors') #SSL 오류 무시
+
+driver = webdriver.Chrome(path,options=options)
+driver.get(url)
+
+
+#함수 정의
+def checkRole(input):
+	role = driver.find_element_by_id("role").getAttribute("value")
+	if role == input:
+		return True
+	else:
+		return False
+
+def getAlertMsg(): #alert 메시지 출력 
+	alert = driver.switch_to.alert()
+	return alert.text
+
+def increasingPenalty(option):
+	room = driver.find_element_by_id("room-id")
+	joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
+
+	for i in range(0,option):
+		room.send_keys("testRoom")
+		joinBtn.click()
+		driver.back()
+		alert = driver.switch_to.alert()
+		alert.accept() #채팅방을 나가면 패널티가 누적된다는 경고창
+
+
+#테스트 케이스 작성
