@@ -1,16 +1,35 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoAlertPresentException #no such alert 오류
+from selenium.webdriver.support.select import Select #input select 요소의 값을 가져오기 위해  
+from selenium.webdriver.common.alert import Alert #Alert객체를 제어하기 위해 임포트
 import time
 
 #초기화
 path = '/home/hamonikr/Hamonia-internship/selenium-test/chromedriver'
+#url = "https://49.247.18.212:3000"
 url = "https://localhost:3000"
 
 options = webdriver.ChromeOptions()
 options.add_argument('--ignore-certificate-errors') #SSL 오류 무시
+#options.add_argument('headless')
+options.add_experimental_option("prefs", { \
+    "profile.default_content_setting_values.media_stream_mic": 1,     # 1:allow, 2:block 
+    "profile.default_content_setting_values.media_stream_camera": 1,  # 1:allow, 2:block
+})
 
 driver = webdriver.Chrome(path,options=options)
 driver.get(url)
+   
+
+#함수 정의
+def alert_is_display():
+        try:
+            driver.switch_to_alert().accept
+        except NoAlertPresentException as e:
+            return False
+        else:
+            return True  
 
 def login():
     enterLogin = driver.find_element_by_xpath('//*[@id="opneLoginDiv"]')
@@ -19,10 +38,14 @@ def login():
     passwordField = driver.find_element_by_xpath('//*[@id="login-screen"]/input[2]')
     emailField.send_keys('test@test01.com') #pc DB에 저장된 이메일로 변경
     passwordField.send_keys('1234')
-    loginBtn = driver.find_element_by_xpath('//*[@id="login-screen"]/button[1]').click()
+    driver.find_element_by_xpath('//*[@id="login-screen"]/button[1]').send_keys(Keys.ENTER)
 
+    print("successful login")
 
-#함수 정의
+def logout():
+    driver.find_element_by_xpath('//*[@id="logoutBtn"]').send_keys(Keys.ENTER)
+    #logoutBtn.click()
+
 def checkRole(input):
 	role = driver.find_element_by_id("role").getAttribute("value")
 	if role == input:
@@ -36,23 +59,64 @@ def getAlertMsg(): #alert 메시지 출력
 
 def increasingPenalty(option):
     login()
-    
-	room = driver.find_element_by_id("room-id") #방이름을 입력하세요 
-	joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
     for i in range(0,option):
-	    room.send_keys("testRoom")
-	    joinBtn.click()
-	    #driver.back()
+        room = driver.find_element_by_id("room-id") #방이름을 입력하세요
+        joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
+        room.send_keys("testRoom")
+        joinBtn.click()
+        time.sleep(3)
+        if alert_is_display():
+            print('exceed user alert')
+        time.sleep(2)
+
+        #click setting button
+        settingBtn = driver.find_element_by_xpath('//*[@id="footerMenu"]/div/button[1]')
+        settingBtn.click()
+
+        select = Select(driver.find_element_by_xpath('//*[@id="selectTime"]'))
+        select.select_by_value('30') # 30분 타이머 테스트
+        confirmBtn = driver.find_element_by_xpath('//*[@id="optionAlert"]/div[3]/input[2]').click()
+        time.sleep(1)
+        #click start button
+        startBtn = driver.find_elements_by_xpath('//*[@id="startBtn"]')[0].click()
+        time.sleep(1)
+        #click leave button
         leaveBtn = driver.find_element_by_xpath('//*[@id="btn-leave-room"]')
         leaveBtn.click()
-	    alert = driver.switch_to.alert()
-	    alert.accept() #채팅방을 나가면 패널티가 누적된다는 경고창
+        time.sleep(1)
+        controlAlert = Alert(driver)
+        controlAlert.accept()
+        print('leave alert')
+    time.sleep(2)
+    logout()
+    time.sleep(2)
+    login()
+    penalty = driver.find_element_by_xpath('//*[@id="createRoom"]/div/div[2]/div[3]/div/div[1]/p[3]').text
+    result = penalty.split(" ")[2]
+    time.sleep(1)
+    if result is None:
+        print('return error')
+    else:
+        print('return result')
+        return result
 
-
-#테스트 케이스 작성
 
 #누적 패널티 표시
-def accumulationPenalty():
-    increasingPenalty(2)
+def accumulationPenalty(times):
+    return increasingPenalty(times)
+    
 
-accumulationPenalty()
+#테스트 케이스 작성
+print('start functional test  with selenium')
+
+
+#penalty test
+times = 2
+penaltyResult = accumulationPenalty(times)
+print("Penalty : ", penaltyResult)
+
+if str(2) == penaltyResult:
+    print('패널티 부여 테스트 : 통과')
+else:
+    print('패널티 부여 테스트 : 실패')
+

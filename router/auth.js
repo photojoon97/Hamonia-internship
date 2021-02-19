@@ -66,6 +66,16 @@ router.post('/penalty', (req) => {
         });
 });
 
+router.post('/role', (req) => {
+    console.log('attempt to change role');
+    console.log('방장 설정 : ', req.body.email);
+    var receiveEmail = req.body.email;
+    User.updateOne({email : receiveEmail}, {master:true})
+        .then(result => {
+            console.log(result);
+        });
+});
+
 
 module.exports = router;
 

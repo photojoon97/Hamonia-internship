@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 //const bcrypt = require('bcrypt');
 const { Db } = require('mongodb');
-const saltRounds = 10;
+//const saltRounds = 10;
 
 
 var Schema = mongoose.Schema;
