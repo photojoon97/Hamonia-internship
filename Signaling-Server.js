@@ -4,7 +4,6 @@ var loggerSignaling = log4js_utils.loggerSignaling();
 
 var send_email_utils = require('./send-email-utils');
 
-var allUsersTimer = 0;
 
 var listOfUsers = {};
 var roomList = {};
@@ -228,23 +227,10 @@ module.exports = exports = function(app, socketCallback) {
             if (!roomList[roomid]) {
         		callback(false);
         	} else {
-        		callback(
-                    
-                );
+        		callback(true);
         	}
         });
 
-        //방 타이머 설정
-        socket.on('start-timer', (time) => {
-            socket.broadcast.emit('set-timer-to-all', time);
-        });
-    
-        socket.on('start-timer-to-all', (time) =>{
-            //타이머 시작
-            console.log('=========time==========');
-            console.log(time);
-            allUsersTimer = time;
-        })
 
 		// 방 생성 및 사용자 명 변경
         socket.on('changed-uuid', function(roomid, callback) {

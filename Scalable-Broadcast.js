@@ -72,8 +72,6 @@ module.exports = exports = function(socket, maxRelayLimitPerUser) {
         socket.broadcast.emit('scalable-broadcast-message', message);
     });
 
-
-
     socket.on('can-relay-broadcast', function() {
         if(users[socket.userid]) {
             users[socket.userid].canRelay = true;

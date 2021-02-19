@@ -47,8 +47,8 @@ try {
 var autoRebootServerOnFailure = false;
 var isErrorSendEmail = false; // 에러 메일 전송
 
-var HTTP_PORT = 80;
-var port = 443;
+var HTTP_PORT = 8080;
+var port = 3000;
 
 var ssl_key = fs.readFileSync(path.join(__dirname, resolveURL('fake-keys/privatekey.pem')));
 var ssl_cert = fs.readFileSync(path.join(__dirname, resolveURL('fake-keys/certificate.pem')));
@@ -91,6 +91,7 @@ app = server.createServer(options, http_app);
 
 
 http_app.use(express.static(path.join(__dirname, 'public')));
+
 http_app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -365,8 +366,9 @@ function runServer() {
             setTimeout(log_console, 250);
         }
     });
+    
 
-    app = app.listen(port, process.env.IP || '0.0.0.0', function (error) {
+    app = app.listen(port,'0.0.0.0', function (error) {
         var addr = app.address();
 
         if (addr.address === '0.0.0.0') {
