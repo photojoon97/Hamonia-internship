@@ -215,7 +215,7 @@ http_app.get('/*', (req, res, next) => {
         //isAuthenticated 함수로 인증
         var penalty = req.user.penalty || 0;
         res.cookie('nickName', req.user.nickname); //쿠키 설정 닉네임, 한글은 안됨
-        
+
         if (penalty < 3) {
             //req.user.penalty < 3 일 때 
             //유저의 정보를 room.ejs로 전달해야 함.
@@ -366,7 +366,7 @@ function runServer() {
             setTimeout(log_console, 250);
         }
     });
-    
+
 
     app = app.listen(port,'0.0.0.0', function (error) {
         var addr = app.address();

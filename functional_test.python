@@ -3,15 +3,30 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 #초기화
-path = '/home/hamonikr4/Hamonia-internship/selenium-test/chromedriver'
-url = "https://localhost:3000"
+path = '/home/hamonikr/Hamonia-internship/selenium-test/chromedriver'
+url = "https://49.247.18.212:3000"
 
 options = webdriver.ChromeOptions()
 options.add_argument('--ignore-certificate-errors') #SSL 오류 무시
 
+options.add_experimental_option("prefs", { \
+    "profile.default_content_setting_values.media_stream_mic": 1,     # 1:allow, 2:block 
+    "profile.default_content_setting_values.media_stream_camera": 1,  # 1:allow, 2:block
+})
+
 driver = webdriver.Chrome(path,options=options)
 driver.get(url)
 
+def login():
+    enterLogin = driver.find_element_by_xpath('//*[@id="opneLoginDiv"]')
+    enterLogin.click()
+    emailField = driver.find_element_by_xpath('//*[@id="login-screen"]/input[1]')
+    passwordField = driver.find_element_by_xpath('//*[@id="login-screen"]/input[2]')
+    emailField.send_keys('test01@test.com') #pc DB에 저장된 이메일로 변경
+    passwordField.send_keys('1234')
+    loginBtn = driver.find_element_by_xpath('//*[@id="login-screen"]/button[1]').click()
+
+   
 
 #함수 정의
 def checkRole(input):
@@ -26,15 +41,23 @@ def getAlertMsg(): #alert 메시지 출력
 	return alert.text
 
 def increasingPenalty(option):
-	room = driver.find_element_by_id("room-id")
-	joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
+    login()
+   
 
-	for i in range(0,option):
-		room.send_keys("testRoom")
-		joinBtn.click()
-		driver.back()
-		alert = driver.switch_to.alert()
-		alert.accept() #채팅방을 나가면 패널티가 누적된다는 경고창
+    room = driver.find_element_by_id("room-id") #방이름을 입력하세요
+    joinBtn = driver.find_element_by_xpath('//*[@id="open-or-join-room"]')
+    for i in range(0,option):
+        room.send_keys("testRoom")
+        joinBtn.click()
+        #driver.back()
 
+        leaveBtn = driver.find_element_by_xpath('//*[@id="btn-leave-room"]')
+        leaveBtn.click()
+        alert = driver.switch_to.alert()
+        alert.accept() #채팅방을 나가면 패널티가 누적된다는 경고창
 
 #테스트 케이스 작성
+#누적 패널티 표시
+def accumulationPenalty():
+    increasingPenalty(2)
+accumulationPenalty()

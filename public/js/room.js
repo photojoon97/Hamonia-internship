@@ -4,6 +4,8 @@
  * value isOnlyOneOwnerFnt is in RTCMultiConnection.js
  */
 
+const { user } = require("../../mongodb");
+
 window.enableAdapter = true; // enable adapter.js
 
 var isRoomLogger = true;
@@ -196,20 +198,24 @@ function roomOpenNJoinFnt() {
 
 // 종료 버튼
 document.getElementById('btn-leave-room').onclick = function () {
-	this.disabled = true;//해당 사용자의 이메일을 가져와서
+	this.disabled = true; //해당 사용자의 이메일을 가져와서
 	var userEmail = $('#roomEmail').text(); //해당 사용자의 이메일을 가져와서
 	//현재 유저를 가져와서
 	//타이머가 남았는지 판단하고
 	//남았으면 패널티 부여하고 퇴장
 	//if(타이머?){req.user.penalty 어떻게 접근? }
 
-	if(leaveFlag == true){//타이머가 동작 중이면
-		if(confirm("지금 종료하시면 패널티가 부가됩니다.")) $.post('/penalty', {email : userEmail}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
+	if (leaveFlag == true) { //타이머가 동작 중이면
+		if (confirm("지금 종료하시면 패널티가 부가됩니다.")) $.post('/penalty', {
+			email: userEmail
+		}); // 패널티를 부여하기 위해 /penalty로 사용자 이메일 전달
 	}
 
 	//role 체크
 	//if($.cookie('role') == true) $.post('/roleDelete', {role : $.cookie('role')});
-	$.post('/roleDelete', {email : userEmail});
+	$.post('/roleDelete', {
+		email: userEmail
+	});
 
 	if (isOnlyOneOwnerFnt && connection.isInitiator) {
 		// use this method if you did NOT set "autoCloseEntireSession===true"
@@ -230,11 +236,10 @@ document.getElementById('btn-leave-room').onclick = function () {
 
 //타이머 시작 버튼
 document.getElementById('startBtn').onclick = function () {
-	if(leaveFlag != true){
+	if (leaveFlag != true) {
 		//alert(window.allUserTimer);
-		if(window.allUserTimer != 0) studyTimer();
-	}
-	else{
+		if (window.allUserTimer != 0) studyTimer();
+	} else {
 		alert('타이머가 이미 실행 중');
 	}
 }
@@ -585,7 +590,7 @@ connection.onstream = function (event) {
 		// 내 영상
 		video.muted = true;
 		video.id = "myVideo";
-		
+
 		// 닉네임 설정
 		if ($.cookie('nickName') != null) video.setAttribute('data-name', $.cookie('nickName'));
 		else video.setAttribute('data-name', 'Guest');
@@ -682,19 +687,28 @@ connection.onstream = function (event) {
 
 	mediaElement.id = event.streamid;
 
-	// 방장표시
-	var mContains = $('.media-container');
-	for (var i = 0; i < mContains.length; ++i) {
-		if (mContains.eq(i).data('name') == roomName) {
+	// // 방장표시
+	// var mContains = $('.media-container');
+	// for (var i = 0; i < mContains.length; ++i) {
+	// 	if (mContains.eq(i).data('name') == roomName) {
 
-			if (isOnlyOneOwnerFnt) mContains.eq(i).css('border', '2px solid orange');
+	// 		if (isOnlyOneOwnerFnt) mContains.eq(i).css('border', '2px solid orange');
 
-			//   			if(userName.indexOf(messageSplit) != -1){
-			//   	        	userName = 'Guest' + (connection.getAllParticipants().length + 1);
-			//   	        }
-		}
+	// 		//   			if(userName.indexOf(messageSplit) != -1){
+	// 		//   	        	userName = 'Guest' + (connection.getAllParticipants().length + 1);
+	// 		//   	        }
+	// 	}
+	// }
+	//var ifMaster = req.user.master;//?
+	if(ifMaster == true){
+		//방장 이름만 mid-  로 css 변경하기
+		var modifiedText = 'master : '+$('#myVideo').parent('.media-box').parent('.media-container').data('name');
+		$('#myVideo').parent('.media-box').parent('.media-container').data('name').text(modifiedText);
+		// 생성자
+		//    	$('.actions .btn.file').attr('disabled', false);
+		//    	$('#pdf').attr('disabled', false);
 	}
-
+	
 	$('#myVideo')[0].muted = true;
 
 	refreshVideoView(true);
@@ -750,7 +764,7 @@ connection.onopen = function () {
 	//    document.getElementById('input-text-chat').disabled = false;
 	document.getElementById('btn-leave-room').disabled = false;
 
-	if (roomName == $('#myVideo').parent('.media-box').parent('.media-container').data('name')) {
+	if (roomName == $('#myVideo').parent('.media-box').parent('.media-container').data('name')) { 
 		// 생성자
 		//    	$('.actions .btn.file').attr('disabled', false);
 		//    	$('#pdf').attr('disabled', false);
@@ -967,7 +981,7 @@ if (roomid && roomid.length && $('#userName').val() !== undefined && $('#userNam
 }
 
 
-function studyTimer(){
+function studyTimer() {
 	leaveFlag = true; // 타이머가 시작되면 플래그를 true로 설정
 	var time = setTime * 60;
 
@@ -987,12 +1001,12 @@ function studyTimer(){
 
 		document.querySelector('#clock').innerHTML = Math.floor(hour) + ' : ' + Math.floor(min) + ' : ' + Math.floor(sec);
 
-		if(hour == 0 && min == 0 && sec == 0){
+		if (hour == 0 && min == 0 && sec == 0) {
 			leaveFlag = false;
 			connection.leave();
 			localStream.stop();
 			clearInterval(timer); // 타이머 종료
-			if(confirm("종료 하시겠습니까?"))location.href = "https://" + location.host;
+			if (confirm("종료 하시겠습니까?")) location.href = "https://" + location.host;
 		}
-	},1000); // 1초 단위로 반복
+	}, 1000); // 1초 단위로 반복
 }
